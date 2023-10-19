@@ -43,3 +43,19 @@ export const Outline: Story = {
     label: "Continuer",
   },
 };
+
+export const withSuffixIcon: Story = {
+  args: {
+    variant: "primary",
+    label: "Continuer",
+    suffix: "arrowRight",
+  },
+};
+
+export const withPrefixIcon: Story = {
+  args: {
+    variant: "primary",
+    label: "Retour",
+    prefix: "arrowLeft",
+  },
+};

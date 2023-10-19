@@ -1,4 +1,5 @@
 import React from "react";
+import { Icon, IconProps } from "./Icon";
 
 export interface ButtonProps {
   /** Variante du bouton */
@@ -11,6 +12,10 @@ export interface ButtonProps {
   label: string;
   /** Fonction appelée au clic */
   onClick?: () => void;
+  /** Icone Prefixe */
+  prefix?: IconProps["name"];
+  /** Icone Suffixe */
+  suffix?: IconProps["name"];
 }
 /** Super bouton trop génial */
 export const Button = ({
@@ -19,26 +24,46 @@ export const Button = ({
   size = "medium",
   label,
   onClick,
+  prefix,
+  suffix,
   ...props
 }: ButtonProps) => {
   const variantClasses = {
     primary: {
-      solid:
-        "text-white bg-orange-600 hover:bg-orange-500 focus:bg-orange-500 active:bg-orange-500",
-      outline:
-        "shadow-border text-orange-600 bg-transparent border-2 border-orange-600 hover:bg-orange-50 focus:bg-orange-50 active:bg-orange-100",
+      solid: {
+        buttonClasses:
+          "text-white bg-orange-600 hover:bg-orange-500 focus:bg-orange-500 active:bg-orange-500",
+        iconColor: "stroke-white",
+      },
+      outline: {
+        buttonClasses:
+          "text-orange-600 bg-transparent border-2 border-orange-600 hover:bg-orange-50 focus:bg-orange-50 active:bg-orange-100",
+        iconColor: "stroke-orange-600",
+      },
     },
     secondary: {
-      solid:
-        "text-white bg-blue-950 hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900",
-      outline:
-        "text-blue-600 bg-transparent border-2 border-blue-600 hover:bg-blue-50 focus:bg-blue-50 active:bg-blue-100",
+      solid: {
+        buttonClasses:
+          "text-white bg-blue-600 hover:bg-blue-500 focus:bg-blue-500 active:bg-blue-500",
+        iconColor: "stroke-white",
+      },
+      outline: {
+        buttonClasses:
+          "text-blue-600 bg-transparent border-2 border-blue-600 hover:bg-blue-50 focus:bg-blue-50 active:bg-blue-100",
+        iconColor: "stroke-blue-600",
+      },
     },
     positive: {
-      solid:
-        "text-white bg-green-500 hover:bg-green-400 focus:bg-green-400 active:bg-green-400",
-      outline:
-        "text-green-600 bg-transparent border-2 border-green-600 hover:bg-green-50 focus:bg-green-50 active:bg-green-100",
+      solid: {
+        buttonClasses:
+          "text-white bg-green-600 hover:bg-green-500 focus:bg-green-500 active:bg-green-500",
+        iconColor: "stroke-white",
+      },
+      outline: {
+        buttonClasses:
+          "text-green-600 bg-transparent border-2 border-green-600 hover:bg-green-50 focus:bg-green-50 active:bg-green-100",
+        iconColor: "stroke-green-600",
+      },
     },
   };
 
@@ -51,13 +76,31 @@ export const Button = ({
   return (
     <button
       type="button"
-      className={`transition-colors transition-shadows shadow-sm hover:shadow-md focus:shadow-md active:shadow-sm ${
-        variantClasses[variant][isOutline ? "outline" : "solid"]
+      className={`flex transition-colors transition-shadows shadow-sm hover:shadow-md focus:shadow-md active:shadow-sm ${
+        variantClasses[variant][isOutline ? "outline" : "solid"].buttonClasses
       } ${sizeClasses[size]} rounded-md`}
       onClick={onClick}
       {...props}
     >
+      {prefix ? (
+        <Icon
+          name={prefix}
+          className="mr-2"
+          color={
+            variantClasses[variant][isOutline ? "outline" : "solid"].iconColor
+          }
+        />
+      ) : null}
       {label}
+      {suffix ? (
+        <Icon
+          name={suffix}
+          className="ml-2"
+          color={
+            variantClasses[variant][isOutline ? "outline" : "solid"].iconColor
+          }
+        />
+      ) : null}
     </button>
   );
 };
